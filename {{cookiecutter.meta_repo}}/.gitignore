@@ -1,0 +1,11 @@
+# Installed agent skills — reproducible from .harness-pin.yaml via sync-harness-meta
+.agents/skills/
+
+# Legacy skills layout (do not use)
+.cursor/skills/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/

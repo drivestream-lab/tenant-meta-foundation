@@ -1,0 +1,27 @@
+name: smoke
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  cookiecutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install cookiecutter
+        run: pip install cookiecutter
+      - name: Generate tenant meta skeleton
+        run: cookiecutter . --no-input -o /tmp/out
+      - name: Verify expected layout
+        run: |
+          test -f /tmp/out/example-meta/README.md
+          test -f /tmp/out/example-meta/.gitignore
+          test -f /tmp/out/example-meta/prd/README.md
+          test -f /tmp/out/example-meta/work/INIT-EXAMPLE-001.yaml
+          grep -q '.agents/skills/' /tmp/out/example-meta/.gitignore
